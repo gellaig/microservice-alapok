@@ -1,1 +1,0 @@
-markdown-to-slides README.md -o slide.html
