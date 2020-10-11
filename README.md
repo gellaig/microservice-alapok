@@ -79,22 +79,43 @@ előnyök:
 * tech stack rugalmasság: a független service-k könnyebben cserélhetőek
 
 hátrányok:
-* rendszer komplexitása nő
+* rendszer komplexitása nő (infrastruktúra)
 	* service kommunikációk összehangolása (Service Discovery), hibakezelés (Circuit Breaker)
 	* service-k közötti interakciók tesztelése
 	* fejlesztő csapatok koordinációja (szervezeti átalakítás, Conway's Law)
 
 ---
 
-## Microservice tulajdonságok TODO
+## Microservice tulajdonságok
 
-* Event-driven communication (async) ahol csak lehet
-* Data consistency
-* DDD: Domain driven design
-* Állapotfüggetlen (skálázhatóság)
-* Egy service egy (üzleti) funkció
-* [SOLID](https://howtodoinjava.com/best-practices/solid-principles) elvek
-* Twelve-Factor
+1. Állapotfüggetlen (skálázhatóság)
+2. Egy service egy (üzleti) funkció
+3. DDD: Domain driven design
+4. [SOLID](https://howtodoinjava.com/best-practices/solid-principles) elvek (TDD, Spring Boot segít)
+5. Twelve-Factor
+
+---
+
+## Microservice tulajdonságok
+### 6. Data consistency
+
+* Monolith esetén egyszerű: commit/rollback
+* [SAGA Pattern](https://microservices.io/patterns/data/saga.html): Lokális tranzakciók sorozata
+* minden lokális tranzakció (saga) után egy event triggereli a következő lépést 
+* hiba esetén kompenzációs tranzakciók meghívása:
+<img src="images/compensation.png" alt="drawing" width="550"/>
+
+* saga koordináció:
+	* Choreography: event-ek feladása, ami további service-ket triggerel (pl. Kafka, RabbitMQ)
+	* Orchestrator: külön funkció a service-k koordinációjára (pl. Zeebe)  
+
+---
+
+## Aszinkron kommunikáció
+
+* ahol lehet async hívások
+* példa search service:
+<img src="images/serviceexample.png" alt="drawing" width="550"/>
 
 ---
 
